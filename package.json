@@ -18,6 +18,7 @@
     "fabric": "^5.2.4",
     "file-type": "^18.0.0",
     "file-url": "^4.0.0",
+    "fluent-ffmpeg": "^2.1.2",
     "fs-extra": "^10.1.0",
     "gl": "^5.0.3",
     "gl-buffer": "^2.1.2",

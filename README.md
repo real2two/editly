@@ -1,3 +1,9 @@
+# Lazy fork created because `keepSourceAudio` wasn't working for me.
+
+and an `unlink()` error & if you kept the temp files, the output audio file had no noise in it.
+
+---
+
 ![](logo.png)
 
 [![Discord](https://img.shields.io/discord/986052452245700659)](https://discord.gg/P3u6zKbDK7) [![NPM version](https://img.shields.io/npm/v/editly.svg?style=flat-square)](https://npmjs.org/package/editly) ![Build status](https://github.com/mifi/editly/actions/workflows/test.yml/badge.svg) [![PayPal](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/mifino/usd)

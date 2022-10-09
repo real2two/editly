@@ -381,7 +381,6 @@ async function Editly(config = {}) {
     if (verbose) console.log('Cleanup');
     if (frameSource1) await frameSource1.close();
     if (frameSource2) await frameSource2.close();
-    if (!keepTmp) await fsExtra.remove(tmpDir);
   }
 
   try {
@@ -390,6 +389,8 @@ async function Editly(config = {}) {
   } catch (err) {
     if (outProcessExitCode !== 0 && !err.killed) throw err;
   }
+  
+  if (!keepTmp) await fsExtra.remove(tmpDir);
 
   console.log();
   console.log('Done. Output file can be found at:');

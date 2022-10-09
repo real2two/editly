@@ -1,3 +1,5 @@
+import ffmpeg from 'fluent-ffmpeg';
+
 import pMap from 'p-map';
 import { join, basename, resolve } from 'path';
 import { execa } from 'execa';
@@ -141,19 +143,23 @@ export default ({ ffmpegPath, ffprobePath, enableFfmpegLog, verbose, tmpDir }) =
       if (i < clipAudio.length - 2) ret += outStream;
       return ret;
     }).join(',');
+    
+    const audioClips = clipAudio.map(a => a.path);
 
-    const args = [
-      ...getFfmpegCommonArgs({ enableFfmpegLog }),
-      ...(flatMap(clipAudio, ({ path }) => ['-i', path])),
-      '-filter_complex',
-      filterGraph,
-      '-c', 'flac',
-      '-y',
-      outPath,
-    ];
-    await execa(ffmpegPath, args);
+    return new Promise((resolve, reject) => {
+      const audioConcatter = ffmpeg(audioClips.shift());
+      for (const audio of audioClips) audioConcatter.input(audio);
 
-    return outPath;
+      audioConcatter
+        .on('error', err => {
+          reject(err);
+        })
+        .on('end', () => {
+          resolve(outPath)
+        });
+
+        audioConcatter.mergeToFile(outPath);
+    });
   }
 
   async function mixArbitraryAudio({ streams, audioNorm, outputVolume }) {
